@@ -49,7 +49,7 @@ module DMA_to_BRAM(
     // we want to write data to BRAM with incremental address, so let's use a counter
     reg [31:0] addr_counter;
     always @(posedge clk) begin
-        if (!rst || addr_counter == 32'd2048 || s_axis_tlast) begin
+        if (!rst || addr_counter == 32'd4096 || s_axis_tlast) begin
             addr_counter <= 32'd0;
         end else if (s_axis_tvalid && addr_counter<=32'd2048) begin // write depth is 2048, therefore we can write 512 words of 32 bits
             addr_counter <= addr_counter + 32'd4; // Increment address by 4 bytes for each write

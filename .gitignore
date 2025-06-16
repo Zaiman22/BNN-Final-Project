@@ -1,1 +1,5 @@
 digit-recognizer/
+InstaBNN/data/
+data/
+InstaBNN/
+binary_resnet18_mnist.h5
