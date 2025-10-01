@@ -1,0 +1,13 @@
+jupyterlab 
+notebook 
+matplotlib 
+pandas 
+numpy 
+scipy
+brevitas
+
+
+# for RL incase needed
+gymnasium
+stable-baselines3
+gymnasium[classic-control]
