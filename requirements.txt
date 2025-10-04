@@ -5,9 +5,11 @@ pandas
 numpy 
 scipy
 brevitas
+torchvision==0.23.0 
+torchaudio==2.8.0
 
 
 # for RL incase needed
 gymnasium
-stable-baselines3
+stable-baselines3   
 gymnasium[classic-control]
