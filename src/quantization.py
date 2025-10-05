@@ -74,7 +74,7 @@ class Quantized(nn.Module):
     '''
     Quantize weight into a bitwidth
     '''
-    def __init__(self, bits=5):
+    def __init__(self, bits=2):
         super(Quantized, self).__init__() 
         self.bits = bits
 
