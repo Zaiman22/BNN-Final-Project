@@ -144,7 +144,7 @@ class BinaryLinear(nn.Linear):
     def __init__(self, in_features, out_features, bias=True):
         super(BinaryLinear, self).__init__(in_features, out_features, bias)
         self.binarize = FastSign()
-        self.quantize = Quantized(bits=5)
+        self.quantize = Quantized(bits=8)
 
     def forward(self, input):
         return F.linear(input, self.binarize(self.weight),
