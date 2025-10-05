@@ -4,6 +4,9 @@
 
 This repo is mainly used for better documentation of my undergraduate thesis. If somehow you find this repo useful feel free to use it.
 
+Other documentation also include
+- [Presentation](https://www.canva.com/design/DAG07q-2XNc/1dfxVu5fiunu7GKDAHdBGQ/edit?utm_content=DAG07q-2XNc&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton)
+
 ## Prerequisite
 
 If you are using the container make sure you have [nvidia toolkit](https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/latest/install-guide.html).
@@ -56,3 +59,5 @@ or
 ## RTL
 
 The RTL code will be designed and verified using vivado from xilinx.
+
+
