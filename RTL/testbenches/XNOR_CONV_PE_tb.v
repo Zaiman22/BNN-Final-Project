@@ -66,70 +66,47 @@ module XNOR_CONV_PE_tb();
         .weight_out(weight_out)
     );
 
-    // Clock generation (period = 10ns)
-    always #5 clk = ~clk;
+    // Clock generation (period <= 10ns)
+    always #5 clk <= ~clk;
 
     // Test procedure
     initial begin
 
         // Initialize signals
-        clk = 1;
-        rst = 0;
-        en = 0;
-        weight_control = 0;
-        side_control = 0;
-        top_control = 0;
-        start = 0;
-        pcountin = 0;
-        weight_in = 0;
-        intop = 0;
-        inbottom = 0;
-        inside = 0;
+        clk <= 1;
+        rst <= 0;
+        en <= 0;
+        weight_control <= 0;
+        side_control <= 0;
+        top_control <= 0;
+        start <= 0;
+        pcountin <= 0;
+        weight_in <= 0;
+        intop <= 0;
+        inbottom <= 0;
+        inside <= 0;
 
         // Apply reset
-        #10 rst = 1;
+        #10 rst <= 1;
         #10;
 
         // Load weight
-        weight_control = 1;
-        weight_in = 1;
-        #10 weight_control = 0;weight_in = 0;
-        // #10 weight_control = 1;weight_in = 0;
+        weight_control <= 1;
+        weight_in <= 1;
+        #10 weight_control <= 0;weight_in <= 0;
+        // #10 weight_control <= 1;weight_in <= 0;
 
         // Normal operation
-        en = 1;
-        pcountin = 3;
-        inbottom = 1;
-        inside = 0;
-        side_control = 0;
-        top_control = 0;
+        en <= 1;
+        pcountin <= 3;
+        inbottom <= 1;
+        inside <= 0;
+        side_control <= 0;
+        top_control <= 1;
+        intop <= 1;
+        start <=1;
         #10;
 
-        // Switch to side_control (use 'inside' input)
-        side_control = 1;
-        inside = 1;
-        #10;
-
-        // Switch to top_control (use 'top_reg')
-        side_control = 0;
-        top_control = 1;
-        #10;
-
-        // Change weight and input
-        en = 0;
-        weight_control = 1;
-        weight_in = 0;
-        #10;
-
-        // Continue operation with new weight
-        en = 1;
-        weight_control = 0;
-        pcountin = 5;
-        inbottom = 1;
-        inside = 1;
-        side_control = 0;
-        top_control = 0;
-        #10;
 
         // End simulation
         #20;

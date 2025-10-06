@@ -61,6 +61,8 @@ module XNOR_CONV_PE#(
     assign xnor_weight = weight_reg;
     assign xnor_out = ~(xnor_input ^ xnor_weight); // XNOR operation
     assign pcount_wire = pcountin + xnor_out;
+    assign pcountout = pcount_reg;
+    assign outside = side_reg;
 
 
     assign weight_out = weight_reg;
@@ -70,12 +72,15 @@ module XNOR_CONV_PE#(
     always @(posedge clk ) begin
         if (!rst) begin
             pcount_reg <=0;
-            weight_reg <=0;
             side_reg <=0;
             top_reg <=0;
         end
         else if (en) begin
-            pcount_reg <= pcount_wire;
+            if (start) begin
+                top_reg <= intop;
+                side_reg <= xnor_input;
+                pcount_reg <= pcount_wire;
+            end
         end
     end
 
@@ -89,6 +94,23 @@ module XNOR_CONV_PE#(
             weight_reg <= weight_in;
         end
     end
+
+
+    // valid signal logci
+    reg valid_reg1,valid_reg2;
+    assign valid = valid_reg2;
+
+    always @(posedge clk ) begin
+        if (!rst) begin
+            valid_reg1 <=0;
+            valid_reg2 <=0;
+        end
+        else if (en) begin
+                valid_reg1 <= start;
+                valid_reg2 <= valid_reg1;
+        end
+    end
+
     
 
 endmodule
