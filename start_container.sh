@@ -14,6 +14,7 @@ docker run -it \
     -e JUPYTER_TOKEN=12345123 \
     -v $(pwd)/../../../dataset:/home/jovyan/dataset \
     -v $(pwd)/src:/home/jovyan/src \
+    -v $(pwd)/saved_weight:/home/jovyan/saved_weight \
     --user root \
     jupyter-brev \
 
