@@ -180,7 +180,7 @@ class InputEncoder(nn.Module):
 
     def forward(self, x):
         x = (x * 255.0).view(-1, self.c, 1, self.h, self.w)
-        output = (self.placeholder < torch.round(x/self.resolution)).float()
+        output = (self.placeholder <= torch.round(x/self.resolution)).float()
         output *= 2.0
         output -= 1.0
         return output.view(-1, self.b*self.c, self.h, self.w).detach()

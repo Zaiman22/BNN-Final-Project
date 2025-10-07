@@ -34,7 +34,7 @@ module XNOR_CONV_PE_tb();
     reg side_control;
     reg top_control;
     reg start;
-    wire valid;
+    reg top_start;
 
     reg [PSUM_WIDTH-1:0] pcountin;
     reg weight_in;
@@ -55,7 +55,6 @@ module XNOR_CONV_PE_tb();
         .side_control(side_control),
         .top_control(top_control),
         .start(start),
-        .valid(valid),
         .pcountin(pcountin),
         .weight_in(weight_in),
         .intop(intop),
@@ -63,17 +62,24 @@ module XNOR_CONV_PE_tb();
         .inside(inside),
         .outside(outside),
         .pcountout(pcountout),
-        .weight_out(weight_out)
+        .weight_out(weight_out),
+        .top_start(top_start)
     );
 
     // Clock generation (period <= 10ns)
     always #5 clk <= ~clk;
 
+    reg valid1, valid2;
+
+    always @(posedge clk ) begin
+        valid1 <= start;
+    end
+
     // Test procedure
     initial begin
 
         // Initialize signals
-        clk <= 1;
+        clk <= 0;
         rst <= 0;
         en <= 0;
         weight_control <= 0;
@@ -96,15 +102,30 @@ module XNOR_CONV_PE_tb();
         #10 weight_control <= 0;weight_in <= 0;
         // #10 weight_control <= 1;weight_in <= 0;
 
+        // insert input
+        intop <= 1;
+        top_start <=1;
+        #10 intop <=0;
+
         // Normal operation
-        en <= 1;
         pcountin <= 3;
         inbottom <= 1;
         inside <= 0;
         side_control <= 0;
         top_control <= 1;
-        intop <= 1;
         start <=1;
+        #10;
+
+        intop <= 0;
+        top_start <=1;
+        side_control <= 0;
+        #10;
+        top_start <=0;
+        start <=0;
+
+        inside <= 0;
+        pcountin <= 0;
+        side_control <= 1;
         #10;
 
 

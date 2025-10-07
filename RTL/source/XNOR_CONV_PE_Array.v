@@ -34,35 +34,35 @@ module XNOR_CONV_PE_Array#(
         // PE wire 1
         input wire weight_control_1,
         input wire weight_in1,
-        input wire intop1
+        input wire intop1,
         // PE wire 2
         input wire weight_control_2,
         input wire weight_in2,
-        input wire intop2
+        input wire intop2,
         // PE wire 3
         input wire weight_control_3,
         input wire weight_in3,
-        input wire intop3
+        input wire intop3,
         // PE wire 4
         input wire weight_control_4,
         input wire weight_in4,
-        input wire intop4
+        input wire intop4,
         // PE wire 5
         input wire weight_control_5,
         input wire weight_in5,
-        input wire intop5
+        input wire intop5,
         // PE wire 6
         input wire weight_control_6,
         input wire weight_in6,
-        input wire intop6
+        input wire intop6,
         // PE wire 7
         input wire weight_control_7,
         input wire weight_in7,
-        input wire intop7
+        input wire intop7,
         // PE wire 8
         input wire weight_control_8,
         input wire weight_in8,
-        input wire intop8
+        input wire intop8,
         // PE wire 9
         input wire weight_control_9,
         input wire weight_in9,
