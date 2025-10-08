@@ -123,6 +123,7 @@ class BinaryConv2d(nn.Conv2d):
     def __init__(self, in_channels, out_channels, kernel_size, stride=1,
                  padding=0, dilation=1, groups=1, bias=True,
                  padding_mode='zeros'):
+        self.pad = padding
         super(BinaryConv2d, self).__init__(in_channels, out_channels,
                                               kernel_size, stride,
                                               padding, dilation, groups,
@@ -131,8 +132,9 @@ class BinaryConv2d(nn.Conv2d):
         self.quantize = Quantized(bits=5)
 
     def forward(self, input):
+        input = F.pad(input, (self.pad, self.pad, self.pad, self.pad), value=-1)
         return F.conv2d(input, self.binarize(self.weight),
-                        self.quantize(self.bias), self.stride, self.padding,
+                        self.quantize(self.bias), self.stride, 0,
                         self.dilation, self.groups)
     
 
@@ -148,7 +150,7 @@ class BinaryLinear(nn.Linear):
 
     def forward(self, input):
         return F.linear(input, self.binarize(self.weight),
-                        self.quantize(self.bias))
+                        self.bias)
 
 
 

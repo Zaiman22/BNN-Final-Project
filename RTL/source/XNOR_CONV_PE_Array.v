@@ -27,184 +27,102 @@ module XNOR_CONV_PE_Array#(
         // control signal
         input wire clk,
         input wire rst,
-        input wire en,
         input wire start,
 
 
         input wire weight_control,
         input wire [8:0] weight_in,
+        input wire [8:0]top_start, // ctrl signal for inserting top input register
+        input wire [8:0]top_control, // ctrl signal for inserting top input register
+        input wire [8:0]side_control, // ctrl signal for inserting top input register
+        input wire intop,
+        input wire [8:0] inbottom,
+        output wire signed [4:0] partial_sum_out,
+        output wire valid
     );
 
+    localparam NUMBER_OF_PE = 9;
+    wire signed [PSUM_WIDTH-1:0] pcountin  [8:0];
+    wire signed [PSUM_WIDTH-1:0] pcountout [8:0];
+    wire [8:0] inside;
+    wire [8:0] outside;
 
-    // PE 1
-    NOR_CONV_PE #(.PSUM_WIDTH(PSUM_WIDTH)) PE1 (
-        .clk(clk),
-        .rst(rst),
-        .weight_control(weight_control),
-        .side_control(side_control),
-        .top_control(top_control),
-        .start(start),
-        .valid(valid),
-        .pcountin(pcountin),
-        .weight_in(weight_in),
-        .intop(intop),
-        .inbottom(inbottom),
-        .inside(inside),
-        .outside(outside),
-        .pcountout(pcountout),
-        .weight_out(weight_out)
-    );
+   genvar i;
+    generate
+        for (i = 0; i < NUMBER_OF_PE; i = i + 1) begin : PE_GEN
+            XNOR_CONV_PE XNOR_CONV_PE (
+                .clk(clk),
+                .rst(rst),
+                .weight_control(weight_control),
+                .side_control(side_control[i]),
+                .top_control(top_control[i]),
+                .start(start),
+                .pcountin(pcountin[i]),
+                .weight_in(weight_in[i]),
+                .top_start(top_start[i]),
+                .intop(intop),
+                .inbottom(inbottom[i]),
+                .inside(inside[i]),
+                .outside(outside[i]),
+                .pcountout(pcountout[i])    
+            );
+        end
+    endgenerate
 
-    // PE 2
-    NOR_CONV_PE #(.PSUM_WIDTH(PSUM_WIDTH)) PE2 (
-        .clk(clk),
-        .rst(rst),
-        .weight_control(weight_control),
-        .side_control(side_control),
-        .top_control(top_control),
-        .start(start),
-        .valid(valid),
-        .pcountin(pcountin),
-        .weight_in(weight_in),
-        .intop(intop),
-        .inbottom(inbottom),
-        .inside(inside),
-        .outside(outside),
-        .pcountout(pcountout),
-        .weight_out(weight_out)
-    );
 
-    // PE 3
-    NOR_CONV_PE #(.PSUM_WIDTH(PSUM_WIDTH)) PE3 (
-        .clk(clk),
-        .rst(rst),
-        .weight_control(weight_control),
-        .side_control(side_control),
-        .top_control(top_control),
-        .start(start),
-        .valid(valid),
-        .pcountin(pcountin),
-        .weight_in(weight_in),
-        .intop(intop),
-        .inbottom(inbottom),
-        .inside(inside),
-        .outside(outside),
-        .pcountout(pcountout),
-        .weight_out(weight_out)
-    );
+    // connecting pcount
+    assign pcountin[0] = 0;
+    assign pcountin[1] = 0;
+    assign pcountin[2] = 0;
 
-    // PE 4
-    NOR_CONV_PE #(.PSUM_WIDTH(PSUM_WIDTH)) PE4 (
-        .clk(clk),
-        .rst(rst),
-        .weight_control(weight_control),
-        .side_control(side_control),
-        .top_control(top_control),
-        .start(start),
-        .valid(valid),
-        .pcountin(pcountin),
-        .weight_in(weight_in),
-        .intop(intop),
-        .inbottom(inbottom),
-        .inside(inside),
-        .outside(outside),
-        .pcountout(pcountout),
-        .weight_out(weight_out)
-    );
+    assign pcountin[3] = pcountout[0];
+    assign pcountin[4] = pcountout[1];
+    assign pcountin[5] = pcountout[2];
 
-    // PE 5
-    NOR_CONV_PE #(.PSUM_WIDTH(PSUM_WIDTH)) PE5 (
-        .clk(clk),
-        .rst(rst),
-        .weight_control(weight_control),
-        .side_control(side_control),
-        .top_control(top_control),
-        .start(start),
-        .valid(valid),
-        .pcountin(pcountin),
-        .weight_in(weight_in),
-        .intop(intop),
-        .inbottom(inbottom),
-        .inside(inside),
-        .outside(outside),
-        .pcountout(pcountout),
-        .weight_out(weight_out)
-    );
+    assign pcountin[6] = pcountout[3];
+    assign pcountin[7] = pcountout[4];
+    assign pcountin[8] = pcountout[5];
 
-    // PE 6
-    NOR_CONV_PE #(.PSUM_WIDTH(PSUM_WIDTH)) PE6 (
-        .clk(clk),
-        .rst(rst),
-        .weight_control(weight_control),
-        .side_control(side_control),
-        .top_control(top_control),
-        .start(start),
-        .valid(valid),
-        .pcountin(pcountin),
-        .weight_in(weight_in),
-        .intop(intop),
-        .inbottom(inbottom),
-        .inside(inside),
-        .outside(outside),
-        .pcountout(pcountout),
-        .weight_out(weight_out)
-    );
+    // connecting inside
+    assign inside[0] = outside[1];
+    assign inside[1] = outside[2];
+    assign inside[2] = 0;
 
-    // PE 7
-    NOR_CONV_PE #(.PSUM_WIDTH(PSUM_WIDTH)) PE7 (
-        .clk(clk),
-        .rst(rst),
-        .weight_control(weight_control),
-        .side_control(side_control),
-        .top_control(top_control),
-        .start(start),
-        .valid(valid),
-        .pcountin(pcountin),
-        .weight_in(weight_in),
-        .intop(intop),
-        .inbottom(inbottom),
-        .inside(inside),
-        .outside(outside),
-        .pcountout(pcountout),
-        .weight_out(weight_out)
-    );
 
-    // PE 8
-    NOR_CONV_PE #(.PSUM_WIDTH(PSUM_WIDTH)) PE8 (
-        .clk(clk),
-        .rst(rst),
-        .weight_control(weight_control),
-        .side_control(side_control),
-        .top_control(top_control),
-        .start(start),
-        .valid(valid),
-        .pcountin(pcountin),
-        .weight_in(weight_in),
-        .intop(intop),
-        .inbottom(inbottom),
-        .inside(inside),
-        .outside(outside),
-        .pcountout(pcountout),
-        .weight_out(weight_out)
-    );
+    assign inside[3] = outside[4];
+    assign inside[4] = outside[5];
+    assign inside[5] = 0;
 
-    // PE 9
-    NOR_CONV_PE #(.PSUM_WIDTH(PSUM_WIDTH)) PE9 (
-        .clk(clk),
-        .rst(rst),
-        .weight_control(weight_control),
-        .side_control(side_control),
-        .top_control(top_control),
-        .start(start),
-        .valid(valid),
-        .pcountin(pcountin),
-        .weight_in(weight_in),
-        .intop(intop),
-        .inbottom(inbottom),
-        .inside(inside),
-        .outside(outside),
-        .pcountout(pcountout),
-        .weight_out(weight_out)
-    );
+
+    assign inside[6] = outside[7];
+    assign inside[7] = outside[8];
+    assign inside[8] = 0;
+
+    // popocunt
+    assign partial_sum_out = (pcountout[6] + pcountout[7] + pcountout[8])*2 + minimum_value;
+    assign valid = (start_count ==3)?1:0;
+    localparam minimum_value = -9;
+
+    reg [1:0] start_count;
+    always @(posedge clk ) begin
+        if (!rst) begin
+            start_count <=0;
+            // valid <=0;
+        end
+        else begin
+            
+
+            if (start_count == 3) begin
+                // valid <= 1;
+                start_count <=2;
+            end
+            else begin
+                if (start) begin
+                    start_count <= start_count + 1;
+                end
+                // valid <=0;
+            end
+        end
+    end
 
 endmodule

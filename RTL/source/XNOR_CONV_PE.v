@@ -43,8 +43,7 @@ module XNOR_CONV_PE#(
 
         // output data
         output wire outside,
-        output wire [PSUM_WIDTH-1:0] pcountout,
-        output wire weight_out
+        output wire [PSUM_WIDTH-1:0] pcountout
     );
 
 
@@ -65,7 +64,6 @@ module XNOR_CONV_PE#(
     assign outside = side_reg;
 
 
-    assign weight_out = weight_reg;
 
 
     // output logic

@@ -60,4 +60,15 @@ or
 
 The RTL code will be designed and verified using vivado from xilinx.
 
+## PE convention
+
+There are a control for 3x3 register which use**1**array signal ([8:0] control_signal), the convention to this as below:
+
+Example
+control_signal = 9'b101010000
+
+| 0     | 0     | 0     |
+| ----- | ----- | ----- |
+| **0** | **1** | **0** |
+| **1** | **0** | **1** |
 
