@@ -78,7 +78,7 @@ control_signal = 9'b101010000
 
 ![alt text](image/dataflow_14x14.png)
 
-From the picture above we have 12 states that is needed.
+From the picture above we have 11 states that is needed.
  We will enumerate it as
 
  1. Row 1
@@ -121,7 +121,7 @@ From the picture above we have 12 states that is needed.
 | 2   | 2   | 1   |
 | 2   | 2   | 1   |
 
-5. Side 3
+6. Side 3
 
 |     |     |     |
 | --- | --- | --- |
@@ -130,7 +130,7 @@ From the picture above we have 12 states that is needed.
 | 2   | 2   | 1   |
 
 
-5. new row
+7. new row
 
 |     |     |     |
 | --- | --- | --- |
@@ -138,7 +138,7 @@ From the picture above we have 12 states that is needed.
 | 3   | 3   | 3   |
 | 1   | 1   | 1   |
 
-5. continue row
+8. continue row
 
 |     |     |     |
 | --- | --- | --- |
@@ -146,7 +146,7 @@ From the picture above we have 12 states that is needed.
 | 3   | 3   | 3   |
 | 2   | 2   | 1   |
 
-5. finish row
+9. finish row 1
 
 |     |     |     |
 | --- | --- | --- |
@@ -155,7 +155,7 @@ From the picture above we have 12 states that is needed.
 | 2   | 2   | 1   |
 
 
-5. finish row
+10. finish row 2
 
 |     |     |     |
 | --- | --- | --- |
@@ -164,7 +164,7 @@ From the picture above we have 12 states that is needed.
 | 2   | 2   | 1   |
 
 
-5. finish row
+11. finish row
 
 |     |     |     |
 | --- | --- | --- |
