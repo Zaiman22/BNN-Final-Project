@@ -104,9 +104,9 @@ module XNOR_conv_core #(
 
    wire signed [channel_out_width:0] din, dout;
 
-    rd_en = valid_array & first_channel;
-    valid = write_reg & last_channel;
-    binary_out = (channel_out > threshold) ? 1 : 0;
+    assign rd_en = valid_array & first_channel;
+    assign valid = write_reg & last_channel;
+    assign binary_out = (channel_out > threshold) ? 1 : 0;
     reg write_reg;
     reg signed [4:0] partial_sum_out_reg;
     assign din = channel_out;
@@ -115,7 +115,7 @@ module XNOR_conv_core #(
 
    always @(posedge clk ) begin
         if (!rst) begin
-            channel_out_reg <=0;
+            partial_sum_out_reg <=0;
         end
         else begin
             write_reg <= valid_array;

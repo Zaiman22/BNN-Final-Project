@@ -105,7 +105,7 @@ module XNOR_CONV_PE_Array#(
 
     reg [1:0] start_count;
     always @(posedge clk ) begin
-        if (!rst) begin
+        if (!rst || weight_control) begin
             start_count <=0;
             // valid <=0;
         end
