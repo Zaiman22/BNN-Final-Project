@@ -31,6 +31,7 @@ module XNOR_conv_core #(
         input wire last_channel,
         // Array control signal
         input wire start,
+        input wire weight_control,
         input wire [8:0]top_start, // ctrl signal for inserting top input register
         input wire [8:0]top_control, // ctrl signal for inserting top input register
         input wire [8:0]side_control, // ctrl signal for inserting top input register

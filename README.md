@@ -65,9 +65,9 @@ The RTL code will be designed and verified using vivado from xilinx.
 There are a control for 3x3 register which use**1**array signal ([8:0] control_signal), the convention to this as below:
 
 Example
-control_signal = 9'b101010000
+control_signal = 9'b101010001
 
-| 0     | 0     | 0     |
+| 1     | 0     | 0     |
 | ----- | ----- | ----- |
 | **0** | **1** | **0** |
 | **1** | **0** | **1** |
@@ -78,7 +78,7 @@ control_signal = 9'b101010000
 
 ![alt text](image/dataflow_14x14.png)
 
-From the picture above we have 11 states that is needed.
+From the picture above we have 11 states that is needed. This FSM still work with the assumption there are no convolution done on an input with size less than 5x5
  We will enumerate it as
 
  1. Row 1
@@ -164,10 +164,16 @@ From the picture above we have 11 states that is needed.
 | 2   | 2   | 1   |
 
 
-11. finish row
+11. finish row3
 
 |     |     |     |
 | --- | --- | --- |
 | 3   | 3   | 3   |
 | 3   | 2   | 1   |
 | 2   | 2   | 1   |
+
+## Posr convention
+
+in this project each port is used for 1 purpose only. 
+1. Port A for writin
+2. Port B for reading
